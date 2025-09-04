@@ -21,7 +21,7 @@ app.get('/subtracao/:numUm/:numDois', async (req, res) => {
         const numUm = parseFloat(req.params.numUm);
         const numDois = parseFloat(req.params.numDois);
         const resut = numUm - numDois;
-        return res.status(200).json(`resultado da soma: ${resut}`);
+        return res.status(200).json(`resultado da subtracao: ${resut}`);
     }catch(error){
         res.status(500).json({ erro: error.message });
     }
@@ -33,7 +33,7 @@ app.get('/multiplicacao/:numUm/:numDois', async (req, res) => {
         const numUm = parseFloat(req.params.numUm);
         const numDois = parseFloat(req.params.numDois);
         const resut = numUm * numDois;
-        return res.status(200).json(`resultado da soma: ${resut}`);
+        return res.status(200).json(`resultado da multiplicacao: ${resut}`);
     }catch(error){
         res.status(500).json({ erro: error.message });
     }
@@ -47,7 +47,7 @@ app.get('/divisao/:numUm/:numDois', async (req, res) => {
         if(numDois === 0) {
             return res.status(400).json({ erro: "Divisão por zero não é permitida." });
         }
-        return res.status(200).json(`resultado da soma: ${resut}`);
+        return res.status(200).json(`resultado da divisao: ${resut}`);
     }catch(error){
         res.status(500).json({ erro: error.message });
     }
