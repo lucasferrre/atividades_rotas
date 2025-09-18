@@ -13,9 +13,9 @@ app.get('/ano/:ano', (req, res) => {
     const anoBissexto = (ano % 4 === 0 && ano % 100 !== 0) || (ano % 400 === 0);
   
     if (anoBissexto) {
-      res.send(`O ano ${ano} é bissexto`);
+      return res.status(200).send(`O ano ${ano} é bissexto`);
     } else {
-      res.send(`O ano ${ano} não é bissexto`);
+      return res.status(200).send(`O ano ${ano} não é bissexto`);
     }
   });
 
