@@ -3,7 +3,7 @@ const fs = require('fs/promises');
 const PORT = 2900;
 
 
-app.get('/calculadora/:operacao/:numUm/:numDois', async (req, res) => {
+app.get('/calculadora', async (req, res) => {
     try {
         const { operacao, numUm, numDois } = req.query;
         const n1 = parseFloat(numUm);
