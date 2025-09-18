@@ -2,74 +2,31 @@ const app = require('express')();
 const fs = require('fs/promises');
 const PORT = 2800;
 
-// exercício 1
-//rota para soma
-app.get('/soma/:numUm/:numDois', async (req, res) => {
-    try{
-        const numUm = parseFloat(req.params.numUm);
-        const numDois = parseFloat(req.params.numDois);
-        const resut = numUm + numDois;
-        if (isNaN(numUm) || isNaN(numDois)) {
-            return res.status(400).json({ erro: "Parâmetros inválidos. Por favor, digite números válidos." });
-        }
-        return res.status(200).send(`resultado da soma: ${resut}`);
-
-    }catch(error){
-        res.status(500).json({ erro: error.message });
+// exercício 6
+// Calculando o Índice de Massa Corporal (IMC) e retornando o resultado com a classificação (baixo peso, normal, sobrepeso, obesidade).
+app.get('/imc', (req, res) => {
+    const peso = parseFloat(req.query.peso);
+    const altura = parseFloat(req.query.altura);
+  
+    if (isNaN(peso) || isNaN(altura) || altura <= 0) {
+      return res.status(400).send('Erro: Parâmetros "peso" e "altura" são obrigatórios e devem ser números válidos. A altura deve ser maior que zero.');
     }
-});
-
-//rota para subtração
-app.get('/subtracao/:numUm/:numDois', async (req, res) => {
-    try{
-        const numUm = parseFloat(req.params.numUm);
-        const numDois = parseFloat(req.params.numDois);
-        const resut = numUm - numDois;
-        if (isNaN(numUm) || isNaN(numDois)) {
-            return res.status(400).json({ erro: "Parâmetros inválidos. Por favor, digite números válidos." });
-        }
-        return res.status(200).send(`resultado da subtracao: ${resut}`);
-
-    }catch(error){
-        res.status(500).json({ erro: error.message });
+  
+    const imc = peso / (altura * altura);
+    let classificacao;
+  
+    if (imc < 18.5) {
+      classificacao = 'Baixo peso';
+    } else if (imc >= 18.5 && imc < 24.9) {
+      classificacao = 'Peso normal';
+    } else if (imc >= 25 && imc < 29.9) {
+      classificacao = 'Sobrepeso';
+    } else {
+      classificacao = 'Obesidade';
     }
-    
-});
-
-//rota para multiplicação
-app.get('/multiplicacao/:numUm/:numDois', async (req, res) => {
-    try{
-        const numUm = parseFloat(req.params.numUm);
-        const numDois = parseFloat(req.params.numDois);
-        const resut = numUm * numDois;
-        if (isNaN(numUm) || isNaN(numDois)) {
-            return res.status(400).json({ erro: "Parâmetros inválidos. Por favor, digite números válidos." });
-        }
-        return res.status(200).send(`resultado da multiplicação: ${resut}`);
-
-    }catch(error){
-        res.status(500).json({ erro: error.message });
-    }
-});
-
-//rota para divisão
-app.get('/divisao/:numUm/:numDois', async (req, res) => {
-    try{
-        const numUm = parseFloat(req.params.numUm);
-        const numDois = parseFloat(req.params.numDois);
-        const resut = numUm / numDois;
-        if (isNaN(numUm) || isNaN(numDois)) {
-            return res.status(400).json({ erro: "Parâmetros inválidos. Por favor, digite números válidos." });
-        }
-        if(numDois === 0) {
-            return res.status(400).json({ erro: "Divisão por zero não é permitida." });
-        }
-        return res.status(200).send(`resultado da divisão: ${resut}`);
-
-    }catch(error){
-        res.status(500).json({ erro: error.message });
-    }
-});
+  
+    res.send(`Seu IMC é de: ${imc.toFixed(2)} - ${classificacao}`);
+  });
 
 // rota para erro 404 quando a página não for encontrada em relação a URL
 app.use((req, res) => {
