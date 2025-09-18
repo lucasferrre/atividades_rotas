@@ -3,6 +3,7 @@ const fs = require('fs/promises');
 const PORT = 2800;
 
 // exercício 4
+// Criando uma rota /ano/:ano que receba o ano via path parameter.
 app.get('/ano/:ano', (req, res) => {
     const ano = parseInt(req.params.ano, 10);
   
