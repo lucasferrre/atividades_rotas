@@ -1,75 +1,27 @@
 const app = require('express')();
 const fs = require('fs/promises');
-const PORT = 2800;
+const PORT = 2900;
 
-// exercício 1
-//rota para soma
-app.get('/soma/:numUm/:numDois', async (req, res) => {
-    try{
-        const numUm = parseFloat(req.params.numUm);
-        const numDois = parseFloat(req.params.numDois);
-        const resut = numUm + numDois;
-        if (isNaN(numUm) || isNaN(numDois)) {
-            return res.status(400).json({ erro: "Parâmetros inválidos. Por favor, digite números válidos." });
-        }
-        return res.status(200).send(`resultado da soma: ${resut}`);
-
-    }catch(error){
-        res.status(500).json({ erro: error.message });
+// exercício 5
+app.get('/saudacao/:nome', (req, res) => {
+    const { nome } = req.params;
+    const hora = parseInt(req.query.hora, 10);
+  
+    if (isNaN(hora) || hora < 0 || hora > 23) {
+      return res.status(400).send('Erro: O parâmetro "hora" deve ser um número entre 0 e 23.');
     }
-});
-
-//rota para subtração
-app.get('/subtracao/:numUm/:numDois', async (req, res) => {
-    try{
-        const numUm = parseFloat(req.params.numUm);
-        const numDois = parseFloat(req.params.numDois);
-        const resut = numUm - numDois;
-        if (isNaN(numUm) || isNaN(numDois)) {
-            return res.status(400).json({ erro: "Parâmetros inválidos. Por favor, digite números válidos." });
-        }
-        return res.status(200).send(`resultado da subtracao: ${resut}`);
-
-    }catch(error){
-        res.status(500).json({ erro: error.message });
+  
+    let saudacao;
+    if (hora >= 5 && hora < 12) {
+      saudacao = 'Bom dia';
+    } else if (hora >= 12 && hora < 18) {
+      saudacao = 'Boa tarde';
+    } else {
+      saudacao = 'Boa noite';
     }
-    
-});
-
-//rota para multiplicação
-app.get('/multiplicacao/:numUm/:numDois', async (req, res) => {
-    try{
-        const numUm = parseFloat(req.params.numUm);
-        const numDois = parseFloat(req.params.numDois);
-        const resut = numUm * numDois;
-        if (isNaN(numUm) || isNaN(numDois)) {
-            return res.status(400).json({ erro: "Parâmetros inválidos. Por favor, digite números válidos." });
-        }
-        return res.status(200).send(`resultado da multiplicação: ${resut}`);
-
-    }catch(error){
-        res.status(500).json({ erro: error.message });
-    }
-});
-
-//rota para divisão
-app.get('/divisao/:numUm/:numDois', async (req, res) => {
-    try{
-        const numUm = parseFloat(req.params.numUm);
-        const numDois = parseFloat(req.params.numDois);
-        const resut = numUm / numDois;
-        if (isNaN(numUm) || isNaN(numDois)) {
-            return res.status(400).json({ erro: "Parâmetros inválidos. Por favor, digite números válidos." });
-        }
-        if(numDois === 0) {
-            return res.status(400).json({ erro: "Divisão por zero não é permitida." });
-        }
-        return res.status(200).send(`resultado da divisão: ${resut}`);
-
-    }catch(error){
-        res.status(500).json({ erro: error.message });
-    }
-});
+  
+    res.send(`${saudacao}, ${nome}!`);
+  });
 
 // rota para erro 404 quando a página não for encontrada em relação a URL
 app.use((req, res) => {
