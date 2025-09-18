@@ -1,7 +1,10 @@
 const app = require('express')();
+const e = require('express');
 const fs = require('fs/promises');
-const PORT = 2900;
+const PORT = 2800;
 
+// exercício 2
+//Criando uma rota /calculadora que recebe os parâmetros via query
 
 app.get('/calculadora', async (req, res) => {
     try {
@@ -14,26 +17,21 @@ app.get('/calculadora', async (req, res) => {
             return res.status(400).send('Erro: Parâmetros "numUm" e "numDois" devem ser números válidos.');
         }
 
-        switch (operacao) {
-            case 'soma':
-                result = n1 + n2;
-                break;
-            case 'subtracao':
-                result = n1 - n2;
-                break;
-            case 'multiplicacao':
-                result = n1 * n2;
-                break;
-            case 'divisao':
-                if (n2 === 0) {
-                    return res.status(400).send('Erro: Divisão por zero não é permitida.');
-                }
-                result = n1 / n2;
-                break;
-            default:
-                return res.status(400).send('Erro: Operação inválida. Use soma, subtracao, multiplicacao ou divisao.');
+        if(operacao === 'soma'){
+            result = n1 + n2;
+        }else if(operacao === 'subtracao'){
+            result = n1 - n2;
+        }else if(operacao === 'multiplicacao'){
+            result = n1 * n2;
+        }else if(operacao === 'divisao'){
+            if(n2 === 0){
+                return res.status(400).send('Erro: Divisão por zero não é permitida.');
+            }
+            result = n1 / n2;
         }
-
+        else{
+            return res.status(400).send('Erro: Operação inválida. Use "soma", "subtracao", "multiplicacao" ou "divisao".');
+        }
         return res.status(200).send(`resultado da soma: ${result}`);
 
     } catch (error) {
@@ -42,6 +40,7 @@ app.get('/calculadora', async (req, res) => {
 
 });
 
+// rota para erro 404 quando a página não for encontrada em relação a URL
 app.use((req, res) => {
     res.status(404).send('Página não encontrada!');
 });
