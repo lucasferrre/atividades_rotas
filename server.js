@@ -24,7 +24,7 @@ app.get('/imc', (req, res) => {
       classificacao = 'Obesidade';
     }
   
-    res.send(`Seu IMC é de: ${imc.toFixed(2)} - ${classificacao}`);
+    return res.status(200).send(`Seu IMC é de: ${imc.toFixed(2)} - ${classificacao}`);
   });
 
 // rota para erro 404 quando a página não for encontrada em relação a URL
