@@ -21,7 +21,7 @@ app.get('/saudacao/:nome', (req, res) => {
       saudacao = 'Boa noite';
     }
   
-    res.send(`${saudacao}, ${nome}!`);
+    return res.status(200).send(`${saudacao}, ${nome}!`);
   });
 
 // rota para erro 404 quando a página não for encontrada em relação a URL
