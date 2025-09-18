@@ -1,11 +1,8 @@
 const app = require('express')();
-const e = require('express');
-const fs = require('fs/promises');
 const PORT = 2800;
 
 // exercício 2
 //Criando uma rota /calculadora que recebe os parâmetros via query
-
 app.get('/calculadora', async (req, res) => {
     try {
         const { operacao, numUm, numDois } = req.query;
@@ -32,7 +29,7 @@ app.get('/calculadora', async (req, res) => {
         else{
             return res.status(400).send('Erro: Operação inválida. Use "soma", "subtracao", "multiplicacao" ou "divisao".');
         }
-        return res.status(200).send(`resultado da soma: ${result}`);
+        return res.status(200).send(`O resultado da ${operacao} é: ${result}`);
 
     } catch (error) {
         res.status(500).json({ erro: error.message });
