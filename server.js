@@ -1,5 +1,4 @@
 const app = require('express')();
-const fs = require('fs/promises');
 const PORT = 2800;
 
 // exercício 1
